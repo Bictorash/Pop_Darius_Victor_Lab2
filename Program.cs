@@ -1,5 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Identity;
 using Pop_Darius_Victor_Lab2.Data;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +8,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<Pop_Darius_Victor_Lab2Context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Pop_Darius_Victor_Lab2Context") ?? throw new InvalidOperationException("Connection string 'Pop_Darius_Victor_Lab2Context' not found.")));
+
+builder.Services.AddDbContext<LibraryIdentityContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("Pop_Darius_Victor_Lab2Context") ?? throw new InvalidOperationException("Connection string 'Pop_Darius_Victor_Lab2Context' not found.")));
+builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+options.SignIn.RequireConfirmedAccount = true)
+ .AddEntityFrameworkStores<LibraryIdentityContext>();
 
 var app = builder.Build();
 
@@ -22,6 +29,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication(); ;
 
 app.UseAuthorization();
 
