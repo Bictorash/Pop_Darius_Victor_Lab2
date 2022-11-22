@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Pop_Darius_Victor_Lab2.Models;
 using Pop_Darius_Victor_Lab2.Data;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace Pop_Darius_Victor_Lab2.Pages.Books
 {
+    [Authorize(Roles = "Admin")]
     public class CreateModel : BookCategoriesPageModel
     {
         private readonly Pop_Darius_Victor_Lab2.Data.Pop_Darius_Victor_Lab2Context _context;
